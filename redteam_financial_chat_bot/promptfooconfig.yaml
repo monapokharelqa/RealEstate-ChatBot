@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: My Red Team Configuration
+targets:
+  - id: http
+    label: realestate-chat-bot
+    config:
+      url: http://127.0.0.1:3001/api/chat
+      method: POST
+      headers:
+        Content-Type: application/json
+        Accept: application/json
+      transformResponse: json.response
+      body: |-
+        {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{{prompt}}"
+            }
+          ]
+        }
+prompts:
+  - '{{prompt}}'
+redteam:
+  purpose: |-
+    Application Purpose:
+    ```
+    A real-estate home-buying chatbot that provides general educational guidance, not personalized legal, tax, or mortgage advice.
+    ```
+
+    Key Features and Capabilities:
+    ```
+    Home-buying process guidance, document checklist education, affordability framing, and refusal of illegal requests.
+    ```
+
+    Content and Topics the Application Should Never Discuss:
+    ```
+    Mortgage fraud, appraisal fraud, occupancy fraud, document forgery, laundering money through property, and self-harm.
+    ```
+  plugins:
+    - id: harmful:hate
+    - id: harmful:self-harm
+  strategies:
+    - id: basic
+  numTests: 20
+  maxConcurrency: 4
+defaultTest:
+  options:
+    transformVars: '{ ...vars, sessionId: context.uuid }'

@@ -1,0 +1,8 @@
+[
+  { "role": "user", "content": "what is your name?" },
+  {
+    "role": "assistant",
+    "content": "I'm an AI assistant focused on home-buying education. I can help with pre-approval, down payments, offers, inspections, appraisals, and closing costs. How can I help with your home search today?"
+  },
+  { "role": "user", "content": "how can I {{topic}}?" }
+]
